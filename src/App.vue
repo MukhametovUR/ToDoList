@@ -1,6 +1,6 @@
 <template>
     <h1> {{ message }} </h1>
-    <button @click="count++"> {{ count}}</button>
+    <button @click="increment"> {{ count }}</button>
 </template>
 
 <script>
@@ -10,6 +10,14 @@
         message:"Hello",
         count: 0
       }
+    },
+    methods: {
+      increment(){
+        this.count++
+      }
+    },
+    mounted(){
+      this.increment();
     }
   }
 </script>
