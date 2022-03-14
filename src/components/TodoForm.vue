@@ -13,15 +13,19 @@
             type="text"
             placeholder="Тема задачи"
           >
-          <button 
+          <my-button 
             class="btn"
             @click="createTask"
-          >Создать задачу</button>
+          >Создать задачу</my-button>
         </form>
     </div>
 </template>
 <script>
+import MyButtom from '@/components/UI/MyButton.vue'
 export default {
+  components:{
+    MyButtom
+  },
     data(){
         return {
             task: {
@@ -52,13 +56,4 @@ export default {
   padding: 10px 15px;
   margin-top: 15px;
 }
-.btn {
-  align-self: flex-end;
-  margin-top: 15px;
-  padding: 10px 15px;
-  background: none;
-  color: teal;
-  border: 1px solid teal;
-  border-radius: 5px;
-}   
 </style>

@@ -20,12 +20,5 @@ export default {
 }
 </script>
 <style>
-.taskList {
-  margin: 10px;
-  display: flex;
-  border: 1px solid teal;
-  flex-direction: column;
-  padding: 15px;
-  border-radius: 5px;
-}    
+
 </style>
