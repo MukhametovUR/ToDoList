@@ -3,16 +3,25 @@
       <h1> Планировщик задач </h1>
       <div>
         <h3>Добавить задачу</h3>
-        <form @click="createTask">
+        <form 
+        @submit.prevent>
           <input 
-          class="input"
-          type="text"
+            v-bind:value="userId"
+            @input="userId = $event.target.value"
+            class="input"
+            type="text"
           placeholder="Ответственный">
           <input 
-          class="input"
-          type="text"
-          placeholder="Тема задачи">
-          <button class="btn">Создать задачу</button>
+            v-bind:value="title"
+            @input="title = $event.target.value"
+            class="input"
+            type="text"
+            placeholder="Тема задачи"
+          >
+          <button 
+            class="btn"
+            @click="createTodo"
+          >Создать задачу</button>
         </form>
         <div 
         v-for="item in tasks" :key="item.id"
@@ -31,18 +40,29 @@
     data() {
       return {
         tasks: [
-          {userId:1, id:1, title:'Проектирование проекта',completed:false},
-          {userId:2, id:2, title:'Создать проект',completed:false},
-          {userId:3, id:3, title:'Создать комопненты',completed:false},
-          {userId:4, id:4, title:'Сделать декомпозицию',completed:false},
+          {id:1, userId:1, title:'Проектирование проекта',completed:false},
+          {id:2, userId:2, title:'Создать проект',completed:false},
+          {id:3, userId:3, title:'Создать комопненты',completed:false},
+          {id:4, userId:4, title:'Сделать декомпозицию',completed:false},
         ],
-        title:'',
-        body:''
+        userId:'',
+        title:''
       }
     },
     methods: {
-
-    }
+        createTodo(){
+          const newTodo = {
+            id: this.tasks.length + 1,
+            userId: this.userId, 
+            title: this.title, 
+            completed:false
+          }
+          this.tasks.push(newTodo);
+          this.userId= '',
+          this.title= ''
+        }
+    },
+  
   }
 </script>
 
