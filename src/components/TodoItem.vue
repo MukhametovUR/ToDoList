@@ -7,16 +7,14 @@
                 <div> <strong>Статус:</strong> {{ task.completed }} </div>
             </div>
             <div class="post__btn">
-                <my-button class="btn">Удалить</my-button>
+                <my-button
+                    @click="$emit('remove', task)"
+                >Удалить</my-button>
             </div>
         </div>        
 </template>
 <script>
-import MyButtom from '@/components/UI/MyButton.vue' 
 export default {
-    components:{
-        MyButtom
-    },
     props : {
         task: {
             type: Object,
