@@ -2,26 +2,28 @@
     <div>
           <form @submit.prevent>
           <h3>Добавить задачу</h3>
-          <input 
+          <my-input 
             v-model="task.userId"
-            class="input"
             type="text"
-          placeholder="Ответственный">
-          <input 
-          v-model="task.title"
-            class="input"
+            placeholder="Ответственный"
+          />
+          <my-input 
+            v-model="task.title"
             type="text"
             placeholder="Тема задачи"
-          >
-          <button 
+          />
+          <my-button 
             class="btn"
             @click="createTask"
-          >Создать задачу</button>
+          >Создать задачу</my-button>
         </form>
     </div>
 </template>
 <script>
+import MyInput from '@/components/UI/MyInput.vue';
+
 export default {
+  components: { MyInput },
     data(){
         return {
             task: {
@@ -34,7 +36,7 @@ export default {
     },
     methods:{
         createTask(){
-            this.task.id = Date.now();
+            this.task.id = (Date.now()).toString().slice(-4,-1);
             this.task.completed = false
             this.$emit('create', this.task)
             this.task = {
@@ -46,19 +48,5 @@ export default {
 }
 </script>
 <style>
- .input {
-  width: 100%;
-  border: 1px solid teal;
-  padding: 10px 15px;
-  margin-top: 15px;
-}
-.btn {
-  align-self: flex-end;
-  margin-top: 15px;
-  padding: 10px 15px;
-  background: none;
-  color: teal;
-  border: 1px solid teal;
-  border-radius: 5px;
-}   
+
 </style>

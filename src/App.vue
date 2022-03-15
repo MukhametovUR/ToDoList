@@ -5,6 +5,7 @@
      />
      <todo-list 
      :tasks="tasks"
+     @remove="removeTask"
      />
     </div>
 </template>
@@ -12,6 +13,7 @@
 <script>
 import TodoForm from '@/components/TodoForm.vue';
 import TodoList from '@/components/TodoList.vue';
+
   export default {
     components: {
       TodoForm,
@@ -20,17 +22,20 @@ import TodoList from '@/components/TodoList.vue';
     data() {
       return {
         tasks: [
-          {id:1, userId:1, title:'Проектирование',completed:false},
-          {id:2, userId:2, title:'Создать проект',completed:false},
-          {id:3, userId:3, title:'Создать комопненты',completed:false},
-          {id:4, userId:4, title:'Сделать декомпозицию',completed:false},
+          {id:101, userId:1, title:'Проектирование',completed:false},
+          {id:102, userId:2, title:'Создать проект',completed:false},
+          {id:103, userId:3, title:'Создать комопненты',completed:false},
+          {id:104, userId:4, title:'Сделать декомпозицию',completed:false},
         ]
       }
     },
     methods: {
       createTask(task){
             this.tasks.push(task)
-            }
+            },
+      removeTask(task){
+        this.tasks = this.tasks.filter(p =>p.id !== task.id)
+      }
     }
   
   }
