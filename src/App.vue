@@ -6,13 +6,16 @@
      <todo-list 
      :tasks="tasks"
      @remove="removeTask"
+     v-if="!isTaskLoading"
      />
+     <div v-else><h2>Идет загрузка........</h2></div>
     </div>
 </template>
 
 <script>
 import TodoForm from '@/components/TodoForm.vue';
 import TodoList from '@/components/TodoList.vue';
+import axios from 'axios';
 
   export default {
     components: {
@@ -21,12 +24,9 @@ import TodoList from '@/components/TodoList.vue';
     },
     data() {
       return {
-        tasks: [
-          {id:101, userId:1, title:'Проектирование',completed:false},
-          {id:102, userId:2, title:'Создать проект',completed:false},
-          {id:103, userId:3, title:'Создать комопненты',completed:false},
-          {id:104, userId:4, title:'Сделать декомпозицию',completed:false},
-        ]
+        tasks: [],
+        modificatorValue:'',
+        isTaskLoading: false
       }
     },
     methods: {
@@ -35,7 +35,21 @@ import TodoList from '@/components/TodoList.vue';
             },
       removeTask(task){
         this.tasks = this.tasks.filter(p =>p.id !== task.id)
+      },
+      async fetchTasks(){
+        try{
+          this.isTaskLoading = true;
+                const response = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10');
+                this.tasks = response.data;
+      }catch(e){
+          alert('Ошибка')
+        }finally{
+          this.isTaskLoading = false;
+        }
       }
+    },
+    mounted(){
+     this.fetchTasks() 
     }
   
   }
