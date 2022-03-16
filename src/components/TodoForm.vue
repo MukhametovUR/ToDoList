@@ -1,12 +1,14 @@
 <template>
+<h3>Добавить задачу</h3>
     <div>
-          <form @submit.prevent>
-          <h3>Добавить задачу</h3>
+        <form @submit.prevent
+          class="add__task"
+        >          
           <input 
             v-model.number="task.userId"
             class="input"
             type="text"
-          placeholder="Ответственный">
+            placeholder="Ответственный">
           <input 
           v-model="task.title"
             class="input"
@@ -16,7 +18,7 @@
           <my-button 
             class="btn"
             @click="createTask"
-          >Создать задачу</my-button>
+          >+</my-button>
         </form>
     </div>
 </template>
@@ -38,7 +40,8 @@ export default {
     },
     methods:{
         createTask(){
-            this.task.id = Date.now();
+            this.task.id = Math.floor(Math.random()*20)+10;
+            // console.log(this.$emit.tasks)
             this.task.completed = false
             this.$emit('create', this.task)
             this.task = {
@@ -55,5 +58,13 @@ export default {
   border: 1px solid teal;
   padding: 10px 15px;
   margin-top: 15px;
+}
+.add__task {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+input{
+  margin-right: 10px;
 }
 </style>

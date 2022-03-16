@@ -1,14 +1,17 @@
 <template>
     <div class="app">
-     <todo-form
-      @create="createTask"
-     />
-     <todo-list 
-     :tasks="tasks"
-     @remove="removeTask"
-     v-if="!isTaskLoading"
-     />
-     <div v-else><h2>Идет загрузка........</h2></div>
+        <todo-form
+          @create="createTask"
+        />
+        <todo-list 
+          :tasks="tasks"
+          @remove="removeTask"
+          v-if="!isTaskLoading"
+        />
+      <div v-else>
+        <h2>Идет загрузка........</h2>
+        </div>
+
     </div>
 </template>
 
@@ -21,7 +24,7 @@ import axios from 'axios';
     components: {
       TodoForm,
       TodoList
-    },
+     },
     data() {
       return {
         tasks: [],
@@ -70,6 +73,5 @@ form {
   display: flex;
   flex-direction: column;
 }
-
 
 </style>
