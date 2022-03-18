@@ -25,6 +25,7 @@
 <script>
 import MyButtom from '@/components/UI/MyButton.vue'
 export default {
+  emits: ['create'],
   components:{
     MyButtom
   },
@@ -41,12 +42,12 @@ export default {
     methods:{
         createTask(){
             this.task.id = Math.floor(Math.random()*20)+10;
-            // console.log(this.$emit.tasks)
             this.task.completed = false
             this.$emit('create', this.task)
             this.task = {
                 userId : '',
                 title : '',
+                completed:''
             }
         }
     }

@@ -3,6 +3,13 @@
         <todo-form
           @create="createTask"
         />
+        <div class="app__btns">
+          <my-select
+            v-model="selectedSort"
+             :options="sortOptions"
+          >
+          </my-select>
+          </div>
         <todo-list 
           :tasks="tasks"
           @remove="removeTask"
@@ -11,25 +18,35 @@
       <div v-else>
         <h2>Идет загрузка........</h2>
         </div>
-
     </div>
 </template>
 
 <script>
 import TodoForm from '@/components/TodoForm.vue';
 import TodoList from '@/components/TodoList.vue';
+import MySelect from '@/components/UI/MySelect.vue';
+
 import axios from 'axios';
 
   export default {
     components: {
       TodoForm,
-      TodoList
+      TodoList,
+      MySelect
      },
     data() {
       return {
         tasks: [],
         modificatorValue:'',
-        isTaskLoading: false
+        isTaskLoading: false,
+        selectedSort:'',
+        sortOptions: [
+            {value:'userId',name:'По исполнителю'},
+            {value:'id',name:'По задаче'},            
+            {value:'title',name:'По описанию'},
+            {value:'completed',name:'По статусу'}
+
+        ]
       }
     },
     methods: {
@@ -52,9 +69,28 @@ import axios from 'axios';
       }
     },
     mounted(){
-     this.fetchTasks() 
+        this.fetchTasks() 
+    },
+    // computed: {
+    //     sortedPost(){
+    //     return [...this.tasks].sort((task1, task2) => task1[this.selectedSort]?.localeCompare(task2[this.selectedSort]))
+    //     }
+    //  }
+    // В todo-list нужно передать           :tasks="sortedPost"
+
+    watch: {
+        selectedSort(newValue) {
+          if(newValue === "title"){
+              this.tasks.sort((task1,task2) => {
+                  return task1[this.selectedSort]?.localeCompare(task2[this.selectedSort])
+          })
+          }else{
+              this.tasks.sort((a,b) => {
+                 return a[this.selectedSort] - b[this.selectedSort]
+              })
+          }
+      }
     }
-  
   }
 </script>
 
@@ -72,6 +108,12 @@ import axios from 'axios';
 form {
   display: flex;
   flex-direction: column;
+}
+.app__btns {
+  margin: 15px;
+  display: flex;
+  justify-content: space-between;
+  height: 20px;
 }
 
 </style>
