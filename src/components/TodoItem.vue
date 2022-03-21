@@ -1,8 +1,8 @@
 <template>
         <div class="task">
             <div>
-                <div> <strong>Задача:</strong> {{ task.id }} </div>
-                <div> <strong>Ответственный:</strong> {{ task.userId }} </div>
+                <div> <strong>№:</strong> {{ task.id }} </div>
+                <!-- <div> <strong>Ответственный:</strong> {{ task.userId }} </div> -->
                 <div> <strong>Описание:</strong> {{ task.title }} </div>
                 <div> <strong>Статус:</strong> {{ task.completed }} </div>
             </div>
@@ -27,7 +27,7 @@ export default {
 .task {
     padding: 15px;
     border: 2px solid teal;
-    margin-top: 15px;
+    margin: 15px 10px 10px 15px;
     border-radius: 5px;
     display: flex;
     align-items: center;

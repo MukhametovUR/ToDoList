@@ -42,7 +42,7 @@ import axios from 'axios';
         selectedSort:'',
         sortOptions: [
             {value:'userId',name:'По исполнителю'},
-            {value:'id',name:'По задаче'},            
+            {value:'id',name:'По №'},            
             {value:'title',name:'По описанию'},
             {value:'completed',name:'По статусу'}
 
@@ -59,7 +59,7 @@ import axios from 'axios';
       async fetchTasks(){
         try{
           this.isTaskLoading = true;
-                const response = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10');
+                const response = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=3');
                 this.tasks = response.data;
       }catch(e){
           alert('Ошибка')
@@ -69,8 +69,9 @@ import axios from 'axios';
       }
     },
     mounted(){
-        this.fetchTasks() 
+        this.fetchTasks()
     },
+
     // computed: {
     //     sortedPost(){
     //     return [...this.tasks].sort((task1, task2) => task1[this.selectedSort]?.localeCompare(task2[this.selectedSort]))
@@ -104,6 +105,10 @@ import axios from 'axios';
 }
 .app {
   padding: 12px;
+    width: 60%;
+    max-width: 50rem;
+    margin: 0 auto 6rem;
+    position: relative;
 }
 form {
   display: flex;
