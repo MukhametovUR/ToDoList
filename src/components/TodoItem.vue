@@ -26,7 +26,7 @@ export default {
 <style scoped>
 .task {
     padding: 15px;
-    border: 2px solid teal;
+    border: 2px solid black;
     margin-top: 15px;
     border-radius: 5px;
     display: flex;

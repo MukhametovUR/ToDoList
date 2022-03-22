@@ -59,7 +59,7 @@ import axios from 'axios';
       async fetchTasks(){
         try{
           this.isTaskLoading = true;
-                const response = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10');
+                const response = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=3');
                 this.tasks = response.data;
       }catch(e){
           alert('Ошибка')

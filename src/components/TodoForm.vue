@@ -41,7 +41,7 @@ export default {
     },
     methods:{
         createTask(){
-            this.task.id = Math.floor(Math.random()*20)+10;
+            this.task.id = this.$emit(tasks.length);
             this.task.completed = false
             this.$emit('create', this.task)
             this.task = {
@@ -56,7 +56,7 @@ export default {
 <style>
  .input {
   width: 100%;
-  border: 1px solid teal;
+  border: 1px solid black;
   padding: 10px 15px;
   margin-top: 15px;
 }
