@@ -1,81 +1,119 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <div class="app">
+        <todo-form
+          @create="createTask"
+        />
+        <div class="app__btns">
+          <my-select
+            v-model="selectedSort"
+             :options="sortOptions"
+          >
+          </my-select>
+          </div>
+        <todo-list 
+          :tasks="tasks"
+          @remove="removeTask"
+          v-if="!isTaskLoading"
+        />
+      <div v-else>
+        <h2>Идет загрузка........</h2>
+        </div>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
 </template>
 
+<script>
+import TodoForm from '@/components/TodoForm.vue';
+import TodoList from '@/components/TodoList.vue';
+import MySelect from '@/components/UI/MySelect.vue';
+
+import axios from 'axios';
+
+  export default {
+    components: {
+      TodoForm,
+      TodoList,
+      MySelect
+     },
+    data() {
+      return {
+        tasks: [],
+        modificatorValue:'',
+        isTaskLoading: false,
+        selectedSort:'',
+        sortOptions: [
+            {value:'userId',name:'По исполнителю'},
+            {value:'id',name:'По задаче'},            
+            {value:'title',name:'По описанию'},
+            {value:'completed',name:'По статусу'}
+
+        ]
+      }
+    },
+    methods: {
+      createTask(task){
+            this.tasks.push(task)
+            },
+      removeTask(task){
+        this.tasks = this.tasks.filter(p =>p.id !== task.id)
+      },
+      async fetchTasks(){
+        try{
+          this.isTaskLoading = true;
+                const response = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10');
+                this.tasks = response.data;
+      }catch(e){
+          alert('Ошибка')
+        }finally{
+          this.isTaskLoading = false;
+        }
+      }
+    },
+    mounted(){
+        this.fetchTasks() 
+    },
+    // computed: {
+    //     sortedPost(){
+    //     return [...this.tasks].sort((task1, task2) => task1[this.selectedSort]?.localeCompare(task2[this.selectedSort]))
+    //     }
+    //  }
+    // В todo-list нужно передать           :tasks="sortedPost"
+
+    watch: {
+        selectedSort(newValue) {
+          if(newValue === "title"){
+              this.tasks.sort((task1,task2) => {
+                  return task1[this.selectedSort]?.localeCompare(task2[this.selectedSort])
+          })
+          }else{
+              this.tasks.sort((a,b) => {
+                 return a[this.selectedSort] - b[this.selectedSort]
+              })
+          }
+      }
+    }
+  }
+</script>
+
+
 <style>
-@import './assets/base.css';
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
+/* @import '@/assets/base.css'; */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.app {
+  padding: 12px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+}
+.app__btns {
+  margin: 15px;
+  display: flex;
+  justify-content: space-between;
+  height: 20px;
 }
 
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-}
 </style>
