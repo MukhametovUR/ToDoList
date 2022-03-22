@@ -1,6 +1,5 @@
 <template>
      <div v-if="tasks.length > 0" class="reverse">  
-    <h2 class="title__tasks">Список задач</h2>
           <transition-group name="list">
                 <todo-item 
                     v-for="task in tasks" :key="task.id"
@@ -8,6 +7,8 @@
                     @remove="$emit('remove', task)"
                 />        
         </transition-group>  
+            <h2 class="title__tasks">Список задач</h2>
+
      </div>
      <h2 v-else style="color:red">Список задач пуст</h2>
 </template>
