@@ -41,7 +41,7 @@ export default {
     },
     methods:{
         createTask(){
-            this.task.id = this.$emit(tasks.length);
+            this.task.id = this.$parent.tasks.length + 1;
             this.task.completed = false
             this.$emit('create', this.task)
             this.task = {
